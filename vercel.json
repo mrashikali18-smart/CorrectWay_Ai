@@ -1,0 +1,16 @@
+{
+      "version": 2,
+        "builds": [
+            {
+                  "src": "correctway/wsgi.py",
+                        "use": "@vercel/python"
+                            }
+                              ],
+                                "routes": [
+                                    {
+                                          "src": "/(.*)",
+                                                "dest": "correctway/wsgi.py"
+                                                    }
+                                                      ]
+                                                      }
+
