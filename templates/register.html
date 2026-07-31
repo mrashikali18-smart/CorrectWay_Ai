@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block content %}
+<main class="mx-auto flex max-w-md flex-col px-6 py-20">
+  <h1 class="font-display text-3xl text-mist">Create your account</h1>
+  <p class="mt-2 font-body text-sm text-mist/60">
+    Takes a minute. Lets you save every analysis and revisit it later.
+  </p>
+
+  <form method="post" class="mt-8 flex flex-col gap-4">
+    {% csrf_token %}
+    <label class="flex flex-col gap-1.5 font-body text-sm text-mist/80">
+      Name
+      {{ form.name }}
+    </label>
+    <label class="flex flex-col gap-1.5 font-body text-sm text-mist/80">
+      Email
+      {{ form.email }}
+    </label>
+    <label class="flex flex-col gap-1.5 font-body text-sm text-mist/80">
+      Password (min. 6 characters)
+      {{ form.password }}
+    </label>
+
+    {% for field in form %}
+      {% for e in field.errors %}<p class="font-body text-sm text-red-400">{{ e }}</p>{% endfor %}
+    {% endfor %}
+
+    <button type="submit" class="focus-ring mt-2 rounded bg-gold px-5 py-3 font-body font-semibold text-ink hover:bg-gold/90 transition-colors">
+      Register
+    </button>
+  </form>
+
+  <p class="mt-6 font-body text-sm text-mist/60">
+    Already have an account?
+    <a href="{% url 'login' %}" class="text-teal hover:text-gold transition-colors">Log in</a>
+  </p>
+</main>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}FAQ — CorrectWay{% endblock %}
+{% block content %}
+<main class="mx-auto max-w-3xl px-6 py-16">
+  <p class="font-mono text-xs uppercase tracking-widest text-teal">FAQ</p>
+  <h1 class="mt-3 font-display text-3xl text-mist md:text-4xl">Frequently asked questions.</h1>
+
+  <div class="mt-10 flex flex-col divide-y divide-line border-t border-b border-line">
+    {% for q, a in faqs %}
+    <div class="py-6">
+      <h2 class="font-display text-lg text-mist">{{ q }}</h2>
+      <p class="mt-2 font-body text-sm text-mist/60">{{ a }}</p>
+    </div>
+    {% endfor %}
+  </div>
+
+  <div class="mt-10">
+    <a href="{% url 'contact' %}" class="focus-ring rounded bg-gold px-5 py-3 font-body text-sm font-semibold text-ink hover:bg-gold/90 transition-colors">
+      Still have a question? Contact us
+    </a>
+  </div>
+</main>
+{% endblock %}

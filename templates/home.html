@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block content %}
+<main class="mx-auto max-w-5xl px-6">
+  <section class="grid gap-10 py-20 md:grid-cols-[1.2fr,1fr] md:py-28">
+    <div>
+      <p class="font-mono text-xs uppercase tracking-[0.2em] text-teal">
+        Plus 2 finished · career direction, sorted
+      </p>
+      <h1 class="mt-4 font-display text-4xl leading-tight text-mist md:text-6xl">
+        Find your <span class="text-gold">correct way</span> in 25 questions.
+      </h1>
+      <p class="mt-6 max-w-md font-body text-mist/70">
+        Answer 25 yes/no questions about how you think and work. CorrectWay
+        scores your strengths against 20 career paths and hands you the
+        three that fit best — each paired with an AI tool to go explore it.
+      </p>
+      <div class="mt-8 flex flex-wrap items-center gap-4">
+        <a href="{% url 'quiz' %}" class="focus-ring rounded bg-gold px-6 py-3 font-body font-semibold text-ink hover:bg-gold/90 transition-colors">
+          Start the analysis
+        </a>
+        <a href="{% url 'register' %}" class="focus-ring rounded font-body text-mist/70 hover:text-teal transition-colors">
+          Create an account to save results →
+        </a>
+      </div>
+    </div>
+
+    <div class="relative flex items-center justify-center rounded-2xl border border-line bg-slate p-10">
+      <div class="absolute inset-0 rounded-2xl bg-route-dots opacity-40" style="background-size: 16px 16px"></div>
+      <div class="relative flex flex-col items-center gap-4 text-center">
+        {% include "partials/logo.html" with size=64 with_wordmark=False %}
+        <p class="font-mono text-xs text-mist/50">25 questions</p>
+        <p class="font-mono text-xs text-mist/50">↓</p>
+        <p class="font-mono text-xs text-mist/50">12 strength categories</p>
+        <p class="font-mono text-xs text-mist/50">↓</p>
+        <p class="font-mono text-xs text-teal">Top 3 career matches</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="grid gap-6 border-t border-line py-16 md:grid-cols-3">
+    <div class="rounded-xl border border-line bg-slate/60 p-6">
+      <h3 class="font-display text-lg text-mist">Rule-based, not a black box</h3>
+      <p class="mt-2 font-body text-sm text-mist/60">
+        Every match is scored from your actual answers against transparent category weights — you can see why a path was suggested, not just that it was.
+      </p>
+    </div>
+    <div class="rounded-xl border border-line bg-slate/60 p-6">
+      <h3 class="font-display text-lg text-mist">An AI tool for every match</h3>
+      <p class="mt-2 font-body text-sm text-mist/60">
+        Each of the 20 career paths comes with one AI tool suited to exploring it further, so the result is a next step, not just a title.
+      </p>
+    </div>
+    <div class="rounded-xl border border-line bg-slate/60 p-6">
+      <h3 class="font-display text-lg text-mist">Save your results</h3>
+      <p class="mt-2 font-body text-sm text-mist/60">
+        Register to keep every analysis in your account and revisit how your answers — and your matches — change over time.
+      </p>
+    </div>
+  </section>
+</main>
+{% endblock %}

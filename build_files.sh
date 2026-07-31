@@ -1,5 +1,10 @@
-# install dependencies
-python3.9 -m pip install -r requirements.txt
+#!/bin/bash
+set -e
 
-# collect static files
-python3.9 manage.py collectstatic --noinput
+python3 -m pip install --disable-pip-version-check -r requirements.txt
+python3 manage.py migrate --noinput
+python3 manage.py collectstatic --noinput
+
+mkdir -p staticfiles_build
+cp -R staticfiles/. staticfiles_build/ 2>/dev/null || true
+cp -R static/. staticfiles_build/ 2>/dev/null || true
