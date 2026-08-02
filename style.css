@@ -1,0 +1,33 @@
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #12172B;
+  color: #E9EBF5;
+}
+
+::selection {
+  background: #E8A33D;
+  color: #12172B;
+}
+
+.focus-ring:focus-visible {
+  outline: 2px solid #E8A33D;
+  outline-offset: 3px;
+}
+
+.dotted-path {
+  background-image: linear-gradient(to right, rgba(233,235,245,0.25) 40%, transparent 0%);
+  background-position: bottom;
+  background-size: 12px 2px;
+  background-repeat: repeat-x;
+}

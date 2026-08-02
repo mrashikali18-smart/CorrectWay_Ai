@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}About — CorrectWay{% endblock %}
+{% block content %}
+<main class="mx-auto max-w-3xl px-6 py-16">
+  <p class="font-mono text-xs uppercase tracking-widest text-teal">About</p>
+  <h1 class="mt-3 font-display text-3xl text-mist md:text-4xl">Why CorrectWay exists.</h1>
+
+  <p class="mt-6 font-body text-mist/70">
+    Finishing 12th grade means picking a direction with very little to
+    go on — a handful of subjects you did or didn't enjoy, some advice
+    from relatives, and a long list of career names that all sound
+    equally vague. CorrectWay turns that guesswork into a structured,
+    transparent analysis.
+  </p>
+
+  <h2 class="mt-10 font-display text-xl text-mist">How the scoring works</h2>
+  <p class="mt-3 font-body text-mist/70">
+    You answer 25 yes/no questions. Each question is tagged with one or
+    two of 12 underlying strength categories — analytical thinking,
+    creativity, communication, hands-on skill, empathy, organization,
+    technology, leadership, writing, numbers, science, and design. Every
+    "yes" adds a point to the categories that question maps to.
+  </p>
+  <p class="mt-3 font-body text-mist/70">
+    Each of the 20 career profiles has its own weighting across those
+    same categories. Your category scores are compared against every
+    profile's weights to produce a percentage fit, and the top three are
+    shown to you — each paired with one AI tool suited to exploring that
+    path further.
+  </p>
+
+  <h2 class="mt-10 font-display text-xl text-mist">Rule-based, not a black box</h2>
+  <p class="mt-3 font-body text-mist/70">
+    There's no external AI model call involved in the scoring itself —
+    it's deterministic arithmetic over transparent weights, so the same
+    25 answers always produce the same result, and you can see exactly
+    why a career was suggested rather than just being told that it was.
+  </p>
+
+  <div class="mt-10 flex flex-wrap gap-4">
+    <a href="{% url 'quiz' %}" class="focus-ring rounded bg-gold px-5 py-3 font-body text-sm font-semibold text-ink hover:bg-gold/90 transition-colors">
+      Take the analysis
+    </a>
+    <a href="{% url 'careers_directory' %}" class="focus-ring rounded border border-line px-5 py-3 font-body text-sm text-mist/70 hover:text-mist transition-colors">
+      Browse all 20 career profiles
+    </a>
+  </div>
+</main>
+{% endblock %}
