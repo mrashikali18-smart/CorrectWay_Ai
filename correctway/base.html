@@ -1,0 +1,229 @@
+<!doctype html>
+{% load static %}
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="{% static 'img/favicon.svg' %}" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{% block title %}CorrectWay — Find your correct way{% endblock %}</title>
+  <meta name="description" content="A 25-question analysis that maps your strengths to the careers and AI tools that fit them." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink: "#12172B",
+            slate: "#1C2340",
+            line: "rgba(233,235,245,0.08)",
+            gold: "#E8A33D",
+            teal: "#3FBFA6",
+            mist: "#E9EBF5",
+          },
+          fontFamily: {
+            display: ["Fraunces", "serif"],
+            body: ["Inter", "sans-serif"],
+            mono: ["'JetBrains Mono'", "monospace"],
+          },
+          backgroundImage: {
+            "route-dots": "radial-gradient(rgba(233,235,245,0.12) 1px, transparent 1px)",
+          },
+        },
+      },
+    };
+  </script>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+  <style>
+    /* Hide Google Translate's default UI chrome — we drive it with our own dropdown */
+    .goog-te-banner-frame, #goog-gt-tt, .goog-te-balloon-frame { display: none !important; }
+    .goog-te-gadget { height: 0; overflow: hidden; }
+    body { top: 0 !important; position: static !important; }
+    #google_translate_element { position: absolute; height: 0; width: 0; overflow: hidden; }
+    .skiptranslate iframe { display: none !important; }
+  </style>
+  {% block extra_head %}{% endblock %}
+</head>
+<body class="min-h-screen bg-ink font-body text-mist">
+  <div class="aurora" aria-hidden="true"></div>
+
+  <header class="sticky top-0 z-20 border-b border-line bg-ink/85 backdrop-blur">
+    <nav class="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
+      <a href="{% url 'home' %}" class="focus-ring rounded">
+        {% include "partials/logo.html" with with_wordmark=True %}
+      </a>
+
+      <!-- Desktop nav -->
+      <div class="hidden md:flex items-center gap-5 font-body text-sm text-mist/80">
+        <a href="{% url 'about' %}" class="focus-ring rounded hover:text-gold transition-colors">About</a>
+        <a href="{% url 'careers_directory' %}" class="focus-ring rounded hover:text-gold transition-colors">Careers</a>
+        <a href="{% url 'faq' %}" class="focus-ring rounded hover:text-gold transition-colors">FAQ</a>
+        <a href="{% url 'contact' %}" class="focus-ring rounded hover:text-gold transition-colors">Contact</a>
+        <a href="{% url 'quiz' %}" class="focus-ring rounded hover:text-gold transition-colors">25-Question Analysis</a>
+        {% if user.is_authenticated %}
+          <a href="{% url 'history' %}" class="focus-ring rounded hover:text-gold transition-colors">History</a>
+          <a href="{% url 'profile' %}" class="hidden lg:inline text-mist/50 hover:text-gold transition-colors">Hi, {{ user.first_name|default:user.email }}</a>
+          <form method="post" action="{% url 'logout' %}" class="inline">
+            {% csrf_token %}
+            <button type="submit" class="focus-ring rounded hover:text-gold transition-colors">Log out</button>
+          </form>
+        {% else %}
+          <a href="{% url 'login' %}" class="focus-ring rounded hover:text-gold transition-colors">Log in</a>
+          <a href="{% url 'register' %}" class="focus-ring btn-glow rounded-lg bg-gold px-3 py-1.5 font-medium text-ink hover:bg-gold/90 transition-colors">
+            Register
+          </a>
+        {% endif %}
+        {% include "partials/language_switcher.html" %}
+      </div>
+
+      <!-- Mobile hamburger toggle -->
+      <button id="nav-toggle" class="focus-ring md:hidden rounded p-2 text-mist" aria-label="Toggle menu" aria-expanded="false">
+        <svg id="icon-open" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <line x1="3" y1="6" x2="21" y2="6" /><line x1="3" y1="12" x2="21" y2="12" /><line x1="3" y1="18" x2="21" y2="18" />
+        </svg>
+        <svg id="icon-close" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="hidden">
+          <line x1="6" y1="6" x2="18" y2="18" /><line x1="6" y1="18" x2="18" y2="6" />
+        </svg>
+      </button>
+    </nav>
+
+    <!-- Mobile nav panel -->
+    <div id="nav-panel" class="hidden md:hidden border-t border-line bg-ink px-6 py-4">
+      <div class="flex flex-col gap-4 font-body text-sm text-mist/80">
+        <a href="{% url 'about' %}" class="focus-ring rounded hover:text-gold transition-colors">About</a>
+        <a href="{% url 'careers_directory' %}" class="focus-ring rounded hover:text-gold transition-colors">Careers</a>
+        <a href="{% url 'faq' %}" class="focus-ring rounded hover:text-gold transition-colors">FAQ</a>
+        <a href="{% url 'contact' %}" class="focus-ring rounded hover:text-gold transition-colors">Contact</a>
+        <a href="{% url 'quiz' %}" class="focus-ring rounded hover:text-gold transition-colors">25-Question Analysis</a>
+        {% if user.is_authenticated %}
+          <a href="{% url 'history' %}" class="focus-ring rounded hover:text-gold transition-colors">History</a>
+          <a href="{% url 'profile' %}" class="focus-ring rounded hover:text-gold transition-colors">Profile ({{ user.first_name|default:user.email }})</a>
+          <form method="post" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <button type="submit" class="focus-ring rounded hover:text-gold transition-colors">Log out</button>
+          </form>
+        {% else %}
+          <a href="{% url 'login' %}" class="focus-ring rounded hover:text-gold transition-colors">Log in</a>
+          <a href="{% url 'register' %}" class="focus-ring inline-block w-fit btn-glow rounded-lg bg-gold px-3 py-1.5 font-medium text-ink hover:bg-gold/90 transition-colors">
+            Register
+          </a>
+        {% endif %}
+        <div class="border-t border-line pt-4">
+          {% include "partials/language_switcher.html" with mobile=True %}
+        </div>
+      </div>
+    </div>
+  </header>
+
+  {% if messages %}
+    <div class="mx-auto max-w-5xl px-6 pt-4">
+      {% for message in messages %}
+        <p class="rounded border border-teal/40 bg-teal/10 px-4 py-2 text-sm text-mist/90">{{ message }}</p>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  {% block content %}{% endblock %}
+
+  <footer class="border-t border-line">
+    <div class="mx-auto max-w-5xl px-6 py-10 grid gap-8 sm:grid-cols-3">
+      <div>
+        {% include "partials/logo.html" with with_wordmark=True %}
+        <p class="mt-3 font-body text-sm text-mist/50">Built for students who just finished 12th grade.</p>
+      </div>
+      <div class="font-body text-sm text-mist/70 flex flex-col gap-2">
+        <a href="{% url 'about' %}" class="hover:text-gold transition-colors">About</a>
+        <a href="{% url 'careers_directory' %}" class="hover:text-gold transition-colors">Careers directory</a>
+        <a href="{% url 'faq' %}" class="hover:text-gold transition-colors">FAQ</a>
+        <a href="{% url 'contact' %}" class="hover:text-gold transition-colors">Contact</a>
+      </div>
+      <div class="font-body text-sm text-mist/70 flex flex-col gap-2">
+        <a href="{% url 'privacy' %}" class="hover:text-gold transition-colors">Privacy policy</a>
+        <a href="{% url 'terms' %}" class="hover:text-gold transition-colors">Terms of service</a>
+      </div>
+    </div>
+    <p class="mx-auto max-w-5xl px-6 pb-8 font-mono text-xs text-mist/30">
+      © {% now "Y" %} CorrectWay. All rights reserved.
+    </p>
+  </footer>
+
+  <!-- Translation engine, driven entirely by our own dropdown in partials/language_switcher.html -->
+  <div id="google_translate_element"></div>
+  <script>
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement({
+        pageLanguage: "en",
+        includedLanguages: "en,ta,hi,ml,te,ar,es,fr,de,zh-CN,ja,ko,ru,pt,it,bn,ur,pa,gu,mr,kn,th,vi,id,tr",
+        autoDisplay: false,
+      }, "google_translate_element");
+    }
+  </script>
+  <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+  <script>
+    (function () {
+      // -- Language dropdown(s): reads/writes the googtrans cookie that
+      // Google Translate's widget watches, so our own UI is the only
+      // thing the visitor ever sees.
+      function currentLangCode() {
+        const match = document.cookie.match(/googtrans=\/en\/([a-zA-Z-]+)/);
+        return match ? match[1] : "en";
+      }
+
+      function setLanguage(code, label) {
+        const value = "/en/" + code;
+        document.cookie = "googtrans=" + value + "; path=/";
+        document.cookie = "googtrans=" + value + "; path=/; domain=" + location.hostname;
+        location.reload();
+      }
+
+      const code = currentLangCode();
+      document.querySelectorAll("[data-lang-option]").forEach((btn) => {
+        if (btn.dataset.langCode === code) {
+          document.querySelectorAll("[data-lang-current]").forEach((el) => {
+            el.textContent = btn.dataset.langLabel;
+          });
+        }
+        btn.addEventListener("click", () => setLanguage(btn.dataset.langCode, btn.dataset.langLabel));
+      });
+
+      document.querySelectorAll("[data-lang-root]").forEach((root) => {
+        const toggle = root.querySelector("[data-lang-toggle]");
+        const menu = root.querySelector("[data-lang-menu]");
+        if (!toggle || !menu) return;
+        toggle.addEventListener("click", (e) => {
+          e.stopPropagation();
+          const open = !menu.classList.contains("hidden");
+          document.querySelectorAll("[data-lang-menu]").forEach((m) => m.classList.add("hidden"));
+          menu.classList.toggle("hidden", open);
+          toggle.setAttribute("aria-expanded", String(!open));
+        });
+      });
+      document.addEventListener("click", () => {
+        document.querySelectorAll("[data-lang-menu]").forEach((m) => m.classList.add("hidden"));
+      });
+    })();
+  </script>
+
+  <script>
+    (function () {
+      const toggle = document.getElementById("nav-toggle");
+      const panel = document.getElementById("nav-panel");
+      const iconOpen = document.getElementById("icon-open");
+      const iconClose = document.getElementById("icon-close");
+      if (!toggle) return;
+      toggle.addEventListener("click", () => {
+        const isOpen = !panel.classList.contains("hidden");
+        panel.classList.toggle("hidden");
+        iconOpen.classList.toggle("hidden");
+        iconClose.classList.toggle("hidden");
+        toggle.setAttribute("aria-expanded", String(!isOpen));
+      });
+    })();
+  </script>
+</body>
+</html>

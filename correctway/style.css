@@ -1,0 +1,110 @@
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #12172B;
+  color: #E9EBF5;
+}
+
+::selection {
+  background: #E8A33D;
+  color: #12172B;
+}
+
+.focus-ring:focus-visible {
+  outline: 2px solid #E8A33D;
+  outline-offset: 3px;
+}
+
+.dotted-path {
+  background-image: linear-gradient(to right, rgba(233,235,245,0.25) 40%, transparent 0%);
+  background-position: bottom;
+  background-size: 12px 2px;
+  background-repeat: repeat-x;
+}
+
+/* ---- Aurora ambient background: fixed, blurred gradient blobs behind everything ---- */
+.aurora {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.aurora::before,
+.aurora::after {
+  content: "";
+  position: absolute;
+  width: 46vw;
+  height: 46vw;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.28;
+  animation: aurora-drift 22s ease-in-out infinite alternate;
+}
+.aurora::before {
+  top: -12vw;
+  left: -8vw;
+  background: radial-gradient(circle, #3FBFA6 0%, transparent 70%);
+}
+.aurora::after {
+  bottom: -14vw;
+  right: -10vw;
+  background: radial-gradient(circle, #E8A33D 0%, transparent 70%);
+  animation-delay: -11s;
+}
+@keyframes aurora-drift {
+  0%   { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(3vw, 4vw) scale(1.08); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .aurora::before, .aurora::after { animation: none; }
+}
+
+/* ---- Glassmorphism cards: frosted, translucent, soft border glow ---- */
+.glass-card {
+  background: linear-gradient(160deg, rgba(233,235,245,0.06), rgba(233,235,245,0.015));
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(233,235,245,0.1);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.04);
+  transition: transform 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+}
+.glass-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(232,163,61,0.35);
+  box-shadow: 0 16px 40px rgba(0,0,0,0.32), 0 0 0 1px rgba(232,163,61,0.08);
+}
+.glass-panel {
+  background: linear-gradient(155deg, rgba(28,35,64,0.7), rgba(18,23,43,0.55));
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+  border: 1px solid rgba(233,235,245,0.08);
+}
+
+/* ---- Gradient text: for accent headline words ---- */
+.gradient-text {
+  background: linear-gradient(100deg, #E8A33D, #f0c377 45%, #3FBFA6);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* ---- Glow button: primary CTAs get a soft ambient glow on hover ---- */
+.btn-glow {
+  position: relative;
+  transition: box-shadow 0.3s ease, transform 0.2s ease;
+}
+.btn-glow:hover {
+  box-shadow: 0 0 0 1px rgba(232,163,61,0.4), 0 8px 28px rgba(232,163,61,0.28);
+  transform: translateY(-1px);
+}
