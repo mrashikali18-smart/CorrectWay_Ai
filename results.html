@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block content %}
+{% if not result %}
+<main class="mx-auto max-w-2xl px-6 py-20 text-center">
+  <p class="font-body text-mist/60">No analysis to show yet.</p>
+  <a href="{% url 'quiz' %}" class="focus-ring mt-6 inline-block rounded bg-gold px-5 py-3 font-body font-semibold text-ink">
+    Take the 25-question analysis
+  </a>
+</main>
+{% else %}
+<main class="mx-auto max-w-2xl px-6 py-16">
+  <p class="font-mono text-xs uppercase tracking-widest text-teal">Your best-fit paths</p>
+  <h1 class="mt-3 font-display text-3xl text-mist md:text-4xl">Here's your correct way.</h1>
+  <p class="mt-3 font-body text-sm text-mist/60">
+    Scored against 20 career profiles from your 25 answers.
+    {% if not user.is_authenticated %} Register to save this result and track it over time.{% endif %}
+  </p>
+
+  <div class="mt-10 flex flex-col gap-4">
+    {% for career in result.top %}
+    <div class="rounded-xl border border-line bg-slate p-6">
+      <div class="flex items-center justify-between">
+        <span class="font-mono text-xs text-gold">#{{ forloop.counter }} match</span>
+        <span class="font-mono text-xs text-teal">{{ career.pct }}%</span>
+      </div>
+      <h2 class="mt-2 font-display text-xl text-mist">{{ career.title }}</h2>
+      <div class="mt-3 h-1.5 w-full overflow-hidden rounded-full bg-line">
+        <div class="h-full rounded-full bg-gradient-to-r from-teal to-gold" style="width: {{ career.pct }}%"></div>
+      </div>
+      <p class="mt-4 font-body text-sm text-mist/60">
+        Suggested AI tool to explore further: <span class="text-mist/90">{{ career.tool }}</span>
+      </p>
+    </div>
+    {% endfor %}
+  </div>
+
+  <div class="mt-10 flex flex-wrap gap-4">
+    <a href="{% url 'quiz' %}" class="focus-ring rounded border border-line px-5 py-3 font-body text-sm text-mist/70 hover:text-mist transition-colors">
+      Retake the analysis
+    </a>
+    {% if not user.is_authenticated %}
+    <a href="{% url 'register' %}" class="focus-ring rounded bg-gold px-5 py-3 font-body text-sm font-semibold text-ink hover:bg-gold/90 transition-colors">
+      Save this result — register
+    </a>
+    {% endif %}
+  </div>
+</main>
+{% endif %}
+{% endblock %}
